@@ -1,0 +1,34 @@
+{
+  "version": "0.1.0",
+  "packages": [
+    "packages/tap",
+    "packages/store",
+    "packages/assistant-stream",
+    "packages/cloud",
+    "packages/core",
+    "packages/safe-content-frame",
+    "packages/react",
+    "packages/react-native",
+    "packages/ai-sdk",
+    "packages/next",
+    "packages/react-markdown",
+    "packages/x-generative-compiler",
+    "packages/metro",
+    "packages/react-ink",
+    "packages/react-ink-markdown",
+    "packages/tw-shimmer",
+    "packages/agent-launcher",
+    "packages/cli",
+    "packages/create-assistant-ui",
+    "packages/assistant-protocol",
+    "packages/assistant-runtime"
+  ],
+  "optionalPackages": ["packages/assistant-runtime-agui"],
+  "templates": ["default", "minimal", "cloud", "cloud-clerk"],
+  "examples": [
+    "with-expo",
+    "with-react-ink",
+    "with-react-router",
+    "with-tanstack"
+  ]
+}

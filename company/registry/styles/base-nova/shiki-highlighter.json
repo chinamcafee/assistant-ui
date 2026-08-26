@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shiki-highlighter",
+  "type": "registry:component",
+  "title": "Shiki Highlighter",
+  "description": "Code block highlighting powered by react-shiki.",
+  "dependencies": [
+    "react-shiki",
+    "@wenchuantech/assistant-ui-react",
+    "@wenchuantech/assistant-ui-react-markdown"
+  ],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "components/assistant-ui/shiki-highlighter.tsx",
+      "content": "\"use client\";\n\nimport type { FC } from \"react\";\nimport { useShikiHighlighter, type ShikiHighlighterProps } from \"react-shiki\";\nimport { useAuiState } from \"@wenchuantech/assistant-ui-react\";\nimport type { SyntaxHighlighterProps as AUIProps } from \"@wenchuantech/assistant-ui-react-markdown\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Props for the SyntaxHighlighter component\n */\nexport type HighlighterProps = Omit<\n  ShikiHighlighterProps,\n  \"children\" | \"theme\"\n> & {\n  theme?: ShikiHighlighterProps[\"theme\"];\n} & Pick<AUIProps, \"language\" | \"code\"> &\n  Partial<Pick<AUIProps, \"node\" | \"components\">>;\n\nconst containerClassName =\n  \"aui-shiki-base [&_pre]:border-border/50 [&_pre]:bg-muted/30! [&_.line]:px-0! [&_pre]:overflow-x-auto [&_pre]:rounded-t-none [&_pre]:rounded-b-xl [&_pre]:border [&_pre]:border-t-0 [&_pre]:p-3.5 [&_pre]:text-[13px] [&_pre]:leading-relaxed\";\n\nconst PlainCode: FC<{ code: string }> = ({ code }) => (\n  <pre>\n    <code>{code}</code>\n  </pre>\n);\n\nconst HighlightedCode: FC<{\n  code: string;\n  language: HighlighterProps[\"language\"];\n  theme: NonNullable<HighlighterProps[\"theme\"]>;\n  options: Omit<ShikiHighlighterProps, \"children\" | \"language\" | \"theme\">;\n}> = ({ code, language, theme, options }) => {\n  const highlighted = useShikiHighlighter(code, language, theme, {\n    ...options,\n    defaultColor: \"light-dark()\",\n  });\n  return <>{highlighted ?? <PlainCode code={code} />}</>;\n};\n\n/**\n * SyntaxHighlighter component, using react-shiki\n * Use it by passing to `defaultComponents` in `markdown-text.tsx`\n *\n * Skips tokenization while the message part is streaming and renders the\n * plain code in the same container, so streaming costs no Shiki work and\n * settling is a color change rather than a layout shift.\n *\n * @example\n * const defaultComponents = memoizeMarkdownComponents({\n *   SyntaxHighlighter,\n *   h1: //...\n *   //...other elements...\n * });\n */\nexport const SyntaxHighlighter: FC<HighlighterProps> = ({\n  code,\n  language,\n  theme = { dark: \"github-dark-default\", light: \"github-light-default\" },\n  className,\n  style,\n  // Inert: useShikiHighlighter output has no default styles or language label.\n  addDefaultStyles: _addDefaultStyles,\n  showLanguage: _showLanguage,\n  delay = 150, // the part settles before smooth streaming finishes draining, so code keeps changing for a few frames\n  node: _node,\n  components: _components,\n  ...options\n}) => {\n  const isStreaming = useAuiState(\n    (s) => s.optional.part?.status.type === \"running\",\n  );\n  const trimmed = code.trim();\n\n  return (\n    <div\n      className={cn(\n        containerClassName,\n        isStreaming && \"aui-shiki-streaming\",\n        className,\n      )}\n      style={style}\n    >\n      {isStreaming ? (\n        <PlainCode code={trimmed} />\n      ) : (\n        <HighlightedCode\n          code={trimmed}\n          language={language}\n          theme={theme}\n          options={{ ...options, delay }}\n        />\n      )}\n    </div>\n  );\n};\n\nSyntaxHighlighter.displayName = \"SyntaxHighlighter\";\n"
+    }
+  ]
+}

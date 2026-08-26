@@ -1,0 +1,47 @@
+{
+  "name": "@wenchuantech/assistant-runtime",
+  "version": "0.1.0",
+  "description": "Framework-neutral Wenchuan assistant runtime for Mobile, Web, and Electron",
+  "author": "Beijing Wenchuan Network Technology Co., Ltd.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "aui-build",
+    "test": "pnpm --filter @wenchuantech/assistant-protocol build && vitest run"
+  },
+  "dependencies": {
+    "@wenchuantech/assistant-protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@assistant-ui/x-buildutils": "workspace:*",
+    "vitest": "^4.1.11"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://github.com/chinamcafee/assistant-ui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinamcafee/assistant-ui.git",
+    "directory": "packages/assistant-runtime"
+  },
+  "bugs": {
+    "url": "https://github.com/chinamcafee/assistant-ui/issues"
+  }
+}

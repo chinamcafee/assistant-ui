@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   autofix:
+    if: github.repository == 'assistant-ui/assistant-ui'
     runs-on: blacksmith-8vcpu-ubuntu-2404
     steps:
       - name: Checkout code repository

@@ -47,7 +47,7 @@ describe("update command", () => {
     expect(stderr).toContain("Could not parse package.json.");
     expect(stderr).toContain(`Package path: ${packageJsonPath}`);
     expect(stderr).toContain(
-      "Fix the JSON syntax in that file, then run: assistant-ui update",
+      "Fix the JSON syntax in that file, then run: @wenchuantech/assistant-ui update",
     );
     expect(stderr).toContain("No changes were written.");
     expect(stderr).not.toContain("SyntaxError");

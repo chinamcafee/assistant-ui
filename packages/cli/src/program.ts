@@ -11,7 +11,7 @@ import { doctor } from "./commands/doctor";
 
 export function buildProgram() {
   return new Command()
-    .name("assistant-ui")
+    .name("@wenchuantech/assistant-ui")
     .description("add components and dependencies to your project")
     .addCommand(add)
     .addCommand(create)

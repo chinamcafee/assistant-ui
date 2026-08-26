@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "elements-quote-reply",
+  "type": "registry:component",
+  "title": "Quote reply",
+  "description": "Select a phrase in an answer and a toolbar offers to quote, explain, or rewrite it.",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/elements-surfaces.json"
+  ],
+  "dependencies": ["lucide-react"],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "components/elements/quote-reply.tsx",
+      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { PencilLineIcon, QuoteIcon, SparklesIcon } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { floating, mono } from \"./surfaces\";\n\nexport interface QuoteAction {\n  key: string;\n  label: string;\n  icon: \"quote\" | \"explain\" | \"rewrite\";\n}\n\nconst ICON = {\n  quote: QuoteIcon,\n  explain: SparklesIcon,\n  rewrite: PencilLineIcon,\n} as const;\n\nexport function QuoteReply({\n  before,\n  selection,\n  after,\n  actions,\n  toolbarVisible,\n  quoted,\n  onAction,\n  className,\n  ...props\n}: Omit<\n  ComponentProps<\"div\">,\n  | \"children\"\n  | \"before\"\n  | \"selection\"\n  | \"after\"\n  | \"actions\"\n  | \"toolbarVisible\"\n  | \"quoted\"\n  | \"onAction\"\n> & {\n  before: string;\n  selection: string;\n  after: string;\n  actions: readonly QuoteAction[];\n  toolbarVisible: boolean;\n  quoted?: string;\n  onAction?: (key: string) => void;\n}) {\n  return (\n    <div\n      data-slot=\"quote-reply\"\n      className={cn(\"flex w-full max-w-sm flex-col gap-2.5\", className)}\n\n      {...props}\n    >\n      <p className=\"relative text-[13.5px] leading-relaxed\">\n        <span className=\"text-foreground/70\">{before}</span>\n        <span className=\"text-foreground/95 rounded bg-blue-500/18 px-0.5 dark:bg-blue-400/25\">\n          {selection}\n        </span>\n        <span className=\"text-foreground/70\">{after}</span>\n      </p>\n\n      <div className=\"flex h-9 items-start\">\n        {toolbarVisible && (\n          <div\n            className={cn(\n              floating,\n              \"fade-in zoom-in-95 slide-in-from-top-1 animate-in flex items-center gap-0.5 rounded-full p-1 duration-200\",\n            )}\n          >\n            {actions.map((action) => {\n              const Icon = ICON[action.icon];\n              return (\n                <button\n                  key={action.key}\n                  type=\"button\"\n                  onClick={() => onAction?.(action.key)}\n                  className=\"text-foreground/60 hover:bg-foreground/[0.06] hover:text-foreground/90 flex h-7 items-center gap-1.5 rounded-full px-2.5 text-xs font-medium transition-[background-color,color,scale] duration-150 active:scale-[0.96]\"\n                >\n                  <Icon className=\"size-3.5\" />\n                  {action.label}\n                </button>\n              );\n            })}\n          </div>\n        )}\n      </div>\n\n      {quoted && (\n        <div className=\"fade-in slide-in-from-bottom-1 animate-in flex flex-col gap-1 duration-300\">\n          <span className={cn(mono, \"text-foreground/30\")}>replying to</span>\n          <div className=\"border-foreground/15 text-foreground/55 border-s-2 ps-2.5 text-xs leading-relaxed\">\n            {quoted}\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

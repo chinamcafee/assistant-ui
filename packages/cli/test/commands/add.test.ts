@@ -33,7 +33,7 @@ describe("createAddComponentsPlan", () => {
         "--yes",
         "shadcn@latest",
         "add",
-        "https://r.assistant-ui.com/base/thread.json",
+        "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
         "--yes",
         "--cwd",
         "/repo",
@@ -56,8 +56,8 @@ describe("createAddComponentsPlan", () => {
         "dlx",
         "shadcn@latest",
         "add",
-        "https://r.assistant-ui.com/base/thread.json",
-        "https://r.assistant-ui.com/base/markdown-text.json",
+        "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
+        "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/markdown-text.json",
         "--overwrite",
         "--cwd",
         "/repo",
@@ -78,7 +78,7 @@ describe("createAddComponentsPlan", () => {
       args: [
         "shadcn@latest",
         "add",
-        "https://r.assistant-ui.com/base/thread.json",
+        "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
       ],
     });
   });

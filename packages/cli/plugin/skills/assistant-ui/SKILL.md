@@ -14,7 +14,7 @@ Check if the project has `components.json` (shadcn config) and `@assistant-ui/re
 If assistant-ui is not yet set up, run:
 
 ```bash
-npx assistant-ui init --yes
+npx @wenchuantech/assistant-ui init --yes
 ```
 
 This initializes shadcn and installs the default assistant-ui chat components.
@@ -24,22 +24,22 @@ This initializes shadcn and installs the default assistant-ui chat components.
 Install components via the shadcn registry:
 
 ```bash
-npx shadcn@latest add "https://r.assistant-ui.com/base/chat/b/ai-sdk-quick-start/json"
+npx shadcn@latest add "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/chat/b/ai-sdk-quick-start/json.json"
 ```
 
-For Radix-styled projects (`components.json` style not starting with `base-`), use `https://r.assistant-ui.com/chat/b/ai-sdk-quick-start/json` instead.
+For Radix-styled projects (`components.json` style not starting with `base-`), use `https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/chat/b/ai-sdk-quick-start/json` instead.
 
 Available component presets:
 
 | Preset | Registry URL |
 |--------|-------------|
-| AI SDK Quick Start | `https://r.assistant-ui.com/base/chat/b/ai-sdk-quick-start/json` |
+| AI SDK Quick Start | `https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/chat/b/ai-sdk-quick-start/json` |
 
 You can also add individual assistant-ui components with the assistant-ui CLI, which picks the right flavor from `components.json`:
 
 ```bash
-npx assistant-ui add thread
-npx assistant-ui add markdown-text
+npx @wenchuantech/assistant-ui add thread
+npx @wenchuantech/assistant-ui add markdown-text
 ```
 
 To use the shadcn CLI directly instead, add the assistant-ui registry to `components.json`:
@@ -47,7 +47,7 @@ To use the shadcn CLI directly instead, add the assistant-ui registry to `compon
 ```json
 {
   "registries": {
-    "@assistant-ui": "https://r.assistant-ui.com/styles/{style}/{name}.json"
+    "@wenchuantech-assistant-ui": "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/styles/{style}/{name}.json"
   }
 }
 ```

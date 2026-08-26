@@ -18,6 +18,7 @@ env:
 
 jobs:
   approve:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Prepare npm publish
     runs-on: ubuntu-24.04
     concurrency:
@@ -90,6 +91,7 @@ jobs:
             core.setOutput("default_branch", defaultBranch);
 
   cancel_pending:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Cancel stale pending publishes
     needs: approve
     runs-on: ubuntu-24.04
@@ -198,6 +200,7 @@ jobs:
             core.info(`Canceled ${canceledCount} stale pending run(s)`);
 
   summary:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Release summary
     needs:
       - approve
@@ -664,7 +667,7 @@ jobs:
       - approve
       - cancel_pending
       - summary
-    if: needs.summary.outputs.target_count != '0'
+    if: ${{ github.repository == 'assistant-ui/assistant-ui' && (needs.summary.outputs.target_count != '0') }}
     environment: npm Publish
     runs-on: ubuntu-24.04
     permissions:

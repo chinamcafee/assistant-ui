@@ -1,0 +1,25 @@
+{
+  "$schema": "./package-map.schema.json",
+  "scope": "@wenchuantech",
+  "version": "0.1.0",
+  "repository": "https://github.com/chinamcafee/assistant-ui",
+  "scopedRule": {
+    "from": "@assistant-ui/",
+    "to": "@wenchuantech/assistant-ui-"
+  },
+  "unscoped": {
+    "assistant-stream": "@wenchuantech/assistant-stream",
+    "assistant-cloud": "@wenchuantech/assistant-cloud",
+    "assistant-ui": "@wenchuantech/assistant-ui",
+    "create-assistant-ui": "@wenchuantech/create-assistant-ui",
+    "safe-content-frame": "@wenchuantech/safe-content-frame",
+    "heat-graph": "@wenchuantech/assistant-ui-heat-graph",
+    "tw-glass": "@wenchuantech/assistant-ui-tw-glass",
+    "tw-shimmer": "@wenchuantech/assistant-ui-tw-shimmer"
+  },
+  "companyOwned": [
+    "@wenchuantech/assistant-protocol",
+    "@wenchuantech/assistant-runtime",
+    "@wenchuantech/assistant-runtime-agui"
+  ]
+}

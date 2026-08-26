@@ -166,7 +166,7 @@ describe("info command", () => {
         `Package path: ${path.join(fs.realpathSync(root), "package.json")}`,
       );
       expect(stderr).toContain(
-        "Fix the JSON syntax in that file, then run: assistant-ui info",
+        "Fix the JSON syntax in that file, then run: @wenchuantech/assistant-ui info",
       );
       expect(stderr).not.toContain("SyntaxError");
     } finally {

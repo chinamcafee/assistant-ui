@@ -29,7 +29,7 @@ export interface ProjectMetadata {
   hasLocalComponents: boolean;
 }
 
-export const PROJECT_METADATA: ProjectMetadata[] = [
+const UPSTREAM_PROJECT_METADATA: ProjectMetadata[] = [
   // Templates
   {
     name: "default",
@@ -273,6 +273,21 @@ export const PROJECT_METADATA: ProjectMetadata[] = [
     hasLocalComponents: false,
   },
 ];
+
+const COMPANY_PROJECT_NAMES = new Set([
+  "default",
+  "minimal",
+  "cloud",
+  "cloud-clerk",
+  "with-expo",
+  "with-react-ink",
+  "with-react-router",
+  "with-tanstack",
+]);
+
+export const PROJECT_METADATA = UPSTREAM_PROJECT_METADATA.filter((project) =>
+  COMPANY_PROJECT_NAMES.has(project.name),
+);
 
 // Examples that exist in the monorepo but are intentionally excluded from the CLI:
 //

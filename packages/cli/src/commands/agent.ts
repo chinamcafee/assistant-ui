@@ -2,7 +2,7 @@ import { Command } from "commander";
 import { resolve, dirname } from "node:path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { launch } from "@assistant-ui/agent-launcher";
+import { launch } from "@wenchuantech/assistant-ui-agent-launcher";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

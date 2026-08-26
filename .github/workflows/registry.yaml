@@ -22,6 +22,7 @@ env:
 
 jobs:
   deploy-production:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Deploy Production
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:

@@ -1,0 +1,48 @@
+{
+  "name": "@wenchuantech/assistant-runtime-agui",
+  "version": "0.1.0",
+  "description": "Optional AG-UI event adapter for the Wenchuan assistant runtime",
+  "author": "Beijing Wenchuan Network Technology Co., Ltd.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "aui-build",
+    "test": "pnpm --filter @wenchuantech/assistant-runtime build && vitest run"
+  },
+  "dependencies": {
+    "@wenchuantech/assistant-protocol": "workspace:*",
+    "@wenchuantech/assistant-runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@assistant-ui/x-buildutils": "workspace:*",
+    "vitest": "^4.1.11"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://github.com/chinamcafee/assistant-ui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinamcafee/assistant-ui.git",
+    "directory": "packages/assistant-runtime-agui"
+  },
+  "bugs": {
+    "url": "https://github.com/chinamcafee/assistant-ui/issues"
+  }
+}

@@ -9,7 +9,7 @@ import { getInstallCommand } from "../lib/utils/package-manager";
 export const update = new Command()
   .name("update")
   .description(
-    "Update all '@assistant-ui/*' and 'assistant-*' packages in package.json to latest versions using your package manager.",
+    "Update all '@wenchuantech/assistant-*' packages in package.json to latest versions using your package manager.",
   )
   .option("--dry", "Print the package manager command instead of running it.")
   .option(
@@ -40,9 +40,8 @@ export const update = new Command()
       if (!pkg[section]) continue;
       for (const dep in pkg[section]) {
         if (
-          dep.startsWith("@assistant-ui/") ||
-          dep === "assistant-stream" ||
-          dep === "assistant-cloud"
+          dep.startsWith("@wenchuantech/assistant-") ||
+          dep === "@wenchuantech/safe-content-frame"
         ) {
           targets.push(dep);
         }

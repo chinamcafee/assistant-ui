@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   analyze:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Semver Check
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 2

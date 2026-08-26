@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shimmer-style",
+  "type": "registry:style",
+  "title": "Shimmer Style",
+  "description": "Keyframes and theme variables for the streaming shimmer animation.",
+  "cssVars": {
+    "theme": {
+      "--animate-shimmer": "shimmer-sweep var(--shimmer-duration, 1000ms) linear infinite both"
+    }
+  },
+  "css": {
+    "@keyframes shimmer-sweep": {
+      "from": {
+        "background-position": "150% 0"
+      },
+      "to": {
+        "background-position": "-100% 0"
+      }
+    }
+  }
+}

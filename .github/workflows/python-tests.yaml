@@ -21,6 +21,7 @@ concurrency:
 
 jobs:
   test:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: pytest (${{ matrix.package }}, ${{ matrix.python-version }})
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 10

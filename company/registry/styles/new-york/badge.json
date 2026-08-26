@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:component",
+  "title": "Badge",
+  "description": "Small label for status, categories, and metadata.",
+  "dependencies": ["class-variance-authority", "radix-ui"],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "components/assistant-ui/badge.tsx",
+      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { Slot } from \"radix-ui\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\n\nconst badgeVariants = cva(\n  \"inline-flex items-center justify-center gap-1 rounded-md text-xs font-medium transition-colors [&_svg]:size-3 [&_svg]:shrink-0\",\n  {\n    variants: {\n      variant: {\n        outline:\n          \"border-input text-muted-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground border bg-transparent\",\n        secondary:\n          \"bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/80\",\n        muted:\n          \"bg-muted text-muted-foreground [a&]:hover:bg-muted/80 [a&]:hover:text-foreground\",\n        ghost:\n          \"text-muted-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground bg-transparent\",\n        info: \"bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 [a&]:hover:bg-blue-100/80\",\n        warning:\n          \"bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300 [a&]:hover:bg-amber-100/80\",\n        success:\n          \"bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 [a&]:hover:bg-emerald-100/80\",\n        destructive:\n          \"bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 [a&]:hover:bg-red-100/80\",\n      },\n      size: {\n        sm: \"px-1.5 py-0.5\",\n        default: \"px-2 py-1\",\n        lg: \"px-2.5 py-1.5 text-sm\",\n      },\n    },\n    defaultVariants: {\n      variant: \"outline\",\n      size: \"default\",\n    },\n  },\n);\n\nexport type BadgeProps = ComponentProps<\"span\"> &\n  VariantProps<typeof badgeVariants> & {\n    asChild?: boolean;\n  };\n\nfunction Badge({\n  className,\n  variant,\n  size,\n  asChild = false,\n  ...props\n}: BadgeProps) {\n  const Comp = asChild ? Slot.Root : \"span\";\n\n  return (\n    <Comp\n      data-slot=\"badge\"\n      data-variant={variant}\n      data-size={size}\n      className={cn(badgeVariants({ variant, size }), className)}\n      {...props}\n    />\n  );\n}\n\nexport { Badge, badgeVariants };\n"
+    }
+  ]
+}

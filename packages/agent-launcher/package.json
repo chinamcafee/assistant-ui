@@ -1,7 +1,7 @@
 {
-  "name": "@assistant-ui/agent-launcher",
-  "version": "0.1.12",
-  "description": "Spawn the Claude Code CLI with a chosen plugin directory, skill, and prompt",
+  "name": "@wenchuantech/assistant-ui-agent-launcher",
+  "version": "0.1.0",
+  "description": "Wenchuan Tech launcher for the company assistant-ui CLI",
   "keywords": [
     "claude",
     "claude-code",
@@ -9,7 +9,7 @@
     "launcher",
     "assistant-ui"
   ],
-  "author": "AgentbaseAI Inc.",
+  "author": "Beijing Wenchuan Network Technology Co., Ltd.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -43,13 +43,13 @@
     "access": "public",
     "provenance": true
   },
-  "homepage": "https://www.assistant-ui.com/",
+  "homepage": "https://github.com/chinamcafee/assistant-ui",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/assistant-ui/assistant-ui.git",
+    "url": "git+https://github.com/chinamcafee/assistant-ui.git",
     "directory": "packages/agent-launcher"
   },
   "bugs": {
-    "url": "https://github.com/assistant-ui/assistant-ui/issues"
+    "url": "https://github.com/chinamcafee/assistant-ui/issues"
   }
 }

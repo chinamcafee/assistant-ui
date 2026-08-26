@@ -10,6 +10,11 @@ import {
 } from "jsonc-parser";
 import { logger } from "./utils/logger";
 import { runSpawn, SpawnExitError } from "./run-spawn";
+import {
+  COMPANY_REGISTRY_ALIAS,
+  rewriteCompanyPackageReferences,
+  toCompanyPackageName,
+} from "./company-package-map";
 
 export type PackageManagerName = "npm" | "pnpm" | "yarn" | "bun";
 
@@ -81,7 +86,7 @@ export async function resolveLatestReleaseRef(): Promise<string | undefined> {
   try {
     const authToken = resolveGitHubAuthToken();
     const res = await fetch(
-      "https://api.github.com/repos/assistant-ui/assistant-ui/releases/latest",
+      "https://api.github.com/repos/chinamcafee/assistant-ui/releases/latest",
       authToken
         ? { headers: { Authorization: toBearerAuthHeader(authToken) } }
         : undefined,
@@ -102,8 +107,8 @@ export async function downloadProject(
   ref?: string,
 ): Promise<void> {
   const source = ref
-    ? `gh:assistant-ui/assistant-ui/${repoPath}#${ref}`
-    : `gh:assistant-ui/assistant-ui/${repoPath}`;
+    ? `gh:chinamcafee/assistant-ui/${repoPath}#${ref}`
+    : `gh:chinamcafee/assistant-ui/${repoPath}`;
 
   // Suppress giget's debug output. The `debug` package (used by the upgrade
   // command) sets process.env.DEBUG at module-load time, and giget logs to
@@ -224,6 +229,8 @@ export async function transformProject(
   logger.step("Transforming project files...");
   transformTsConfig(projectDir);
   transformCssFiles(projectDir);
+  transformComponentsJson(projectDir);
+  transformPackageReferences(projectDir);
 
   let assistantUI: string[] | undefined;
   let shadcnUI: string[] | undefined;
@@ -249,7 +256,9 @@ export async function transformProject(
     const allShadcn = shadcnUI.includes("utils")
       ? shadcnUI
       : [...shadcnUI, "utils"];
-    const auiComponents = assistantUI.map((c) => `@assistant-ui/${c}`);
+    const auiComponents = assistantUI.map(
+      (c) => `${COMPANY_REGISTRY_ALIAS}/${c}`,
+    );
     const components = [...allShadcn, ...auiComponents];
     logger.step(`Installing components: ${components.join(", ")}...`);
     const failure = await installShadcnRegistry(
@@ -277,16 +286,20 @@ function transformPackageJson(projectDir: string): void {
     const deps = pkg[depType];
     if (!deps) continue;
 
+    const transformed: Record<string, string> = {};
     for (const [name, version] of Object.entries(deps)) {
-      if (String(version).includes("workspace:")) {
-        deps[name] = "latest";
-      }
+      const companyName = toCompanyPackageName(name);
+      transformed[companyName ?? name] =
+        companyName || String(version).includes("workspace:")
+          ? "latest"
+          : String(version);
     }
+    pkg[depType] = transformed;
   }
 
   // Remove devDependencies that are workspace-only
-  if (pkg.devDependencies?.["@assistant-ui/x-buildutils"]) {
-    delete pkg.devDependencies["@assistant-ui/x-buildutils"];
+  if (pkg.devDependencies?.["@wenchuantech/assistant-ui-x-buildutils"]) {
+    delete pkg.devDependencies["@wenchuantech/assistant-ui-x-buildutils"];
   }
 
   // Update package name to be unique
@@ -294,6 +307,30 @@ function transformPackageJson(projectDir: string): void {
   pkg.name = dirName;
 
   fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
+}
+
+function transformComponentsJson(projectDir: string): void {
+  const configPath = path.join(projectDir, "components.json");
+  if (!fs.existsSync(configPath)) return;
+  const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  config.registries ??= {};
+  delete config.registries["@assistant-ui"];
+  config.registries[COMPANY_REGISTRY_ALIAS] =
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/styles/{style}/{name}.json";
+  fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+}
+
+function transformPackageReferences(projectDir: string): void {
+  const files = globSync("**/*.{js,jsx,mjs,cjs,ts,tsx,json,jsonc,md,mdx}", {
+    cwd: projectDir,
+    ignore: LOCAL_PROJECT_ARTIFACT_GLOB_IGNORES,
+  });
+  for (const file of files) {
+    const fullPath = path.join(projectDir, file);
+    const content = fs.readFileSync(fullPath, "utf8");
+    const rewritten = rewriteCompanyPackageReferences(content);
+    if (rewritten !== content) fs.writeFileSync(fullPath, rewritten);
+  }
 }
 
 function parseTsConfig(content: string): any {

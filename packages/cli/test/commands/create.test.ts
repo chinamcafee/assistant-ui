@@ -57,12 +57,12 @@ describe("resolveProject", () => {
 
   it("returns example metadata when --example is provided", async () => {
     const result = await resolveProject({
-      example: "with-langgraph",
+      example: "with-react-router",
       stdinIsTTY: true,
     });
     expect(result).toEqual(
       expect.objectContaining({
-        name: "with-langgraph",
+        name: "with-react-router",
         category: "example",
         hasLocalComponents: false,
       }),
@@ -95,7 +95,7 @@ describe("resolveProject", () => {
   });
 
   it("uses selected project in interactive mode", async () => {
-    const select = vi.fn().mockResolvedValue("with-ai-sdk-v7");
+    const select = vi.fn().mockResolvedValue("with-tanstack");
     const isCancel = vi.fn().mockReturnValue(false);
 
     const result = await resolveProject({
@@ -105,7 +105,7 @@ describe("resolveProject", () => {
     });
     expect(result).toEqual(
       expect.objectContaining({
-        name: "with-ai-sdk-v7",
+        name: "with-tanstack",
         category: "example",
       }),
     );
@@ -277,17 +277,14 @@ describe("resolveProject error handling", () => {
 });
 
 describe("PROJECT_METADATA", () => {
-  it("contains all 7 templates", () => {
+  it("contains the company release-compatible templates", () => {
     const templates = PROJECT_METADATA.filter((m) => m.category === "template");
-    expect(templates).toHaveLength(7);
+    expect(templates).toHaveLength(4);
     expect(templates.map((t) => t.name)).toEqual([
       "default",
       "minimal",
       "cloud",
       "cloud-clerk",
-      "langchain",
-      "mcp",
-      "eve",
     ]);
   });
 

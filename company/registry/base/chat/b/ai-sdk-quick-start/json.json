@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat/b/ai-sdk-quick-start/json",
+  "type": "registry:page",
+  "title": "AI SDK Quick Start",
+  "description": "Assistant page wired to the AI SDK chat route, with the thread component installed.",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/ai-sdk-backend.json",
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json"
+  ],
+  "dependencies": ["@wenchuantech/assistant-ui-ai-sdk"],
+  "meta": {
+    "importSpecifier": "Assistant",
+    "moduleSpecifier": "@/app/assistant",
+    "nextVersion": "15.1.6"
+  },
+  "files": [
+    {
+      "type": "registry:page",
+      "path": "app/ai-sdk/assistant.tsx",
+      "target": "app/assistant.tsx",
+      "content": "\"use client\";\n\nimport { AssistantRuntimeProvider } from \"@wenchuantech/assistant-ui-react\";\nimport { useChatRuntime, AssistantChatTransport } from \"@wenchuantech/assistant-ui-ai-sdk\";\nimport { lastAssistantMessageIsCompleteWithToolCalls } from \"ai\";\nimport { Thread } from \"@/components/assistant-ui/thread\";\n\nexport const Assistant = () => {\n  const runtime = useChatRuntime({\n    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,\n    transport: new AssistantChatTransport({\n      api: \"/api/chat\",\n    }),\n  });\n\n  return (\n    <AssistantRuntimeProvider runtime={runtime}>\n      <div className=\"h-dvh\">\n        <Thread />\n      </div>\n    </AssistantRuntimeProvider>\n  );\n};\n"
+    }
+  ]
+}

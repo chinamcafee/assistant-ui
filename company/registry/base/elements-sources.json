@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "elements-sources",
+  "type": "registry:component",
+  "title": "Sources",
+  "description": "Citations collapsed into a pill, expanding into scannable source cards.",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/elements-surfaces.json",
+    "collapsible"
+  ],
+  "dependencies": ["lucide-react"],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "components/elements/sources.tsx",
+      "content": "\"use client\";\n\nimport { ChevronDownIcon } from \"lucide-react\";\nimport {\n  Collapsible,\n  CollapsibleContent,\n  CollapsibleTrigger,\n} from \"@/components/ui/collapsible\";\nimport { cn } from \"@/lib/utils\";\nimport { collapsePanel, fieldInteractive, mono, paper } from \"./surfaces\";\n\nexport interface Source {\n  domain: string;\n  title: string;\n}\n\nexport interface SourcesProps {\n  sources: readonly Source[];\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  className?: string;\n}\n\nexport function Sources({\n  sources,\n  open,\n  onOpenChange,\n  className,\n}: SourcesProps) {\n  return (\n    <Collapsible\n      data-slot=\"sources\"\n      open={open}\n      onOpenChange={onOpenChange}\n      className={cn(\"w-full max-w-sm\", className)}\n    >\n      <CollapsibleTrigger\n        className={cn(\n          fieldInteractive,\n          \"group/trigger text-foreground/60 hover:text-foreground/90 inline-flex w-fit items-center gap-1.5 rounded-full px-3.5 py-2 text-xs outline-none\",\n        )}\n      >\n        <span>Sources</span>\n        <span className={cn(mono, \"text-foreground/35 tabular-nums\")}>\n          {sources.length}\n        </span>\n        <ChevronDownIcon className=\"size-3 opacity-60 transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/trigger:rotate-180 group-data-panel-open/trigger:rotate-180 motion-reduce:transition-none\" />\n      </CollapsibleTrigger>\n      <CollapsibleContent className={cn(collapsePanel, \"outline-none\")}>\n        <div className=\"grid grid-cols-2 gap-2 pt-2.5\">\n          {sources.map((source) => (\n            <div\n              key={source.domain}\n              className={cn(\n                paper,\n                \"flex flex-col gap-1.5 rounded-2xl p-3 transition-transform hover:-translate-y-px\",\n              )}\n            >\n              <div className=\"flex items-center gap-1.5\">\n                <span className=\"bg-foreground/[0.06] text-foreground/45 flex size-4 shrink-0 items-center justify-center rounded text-[9px] font-medium\">\n                  {source.domain.charAt(0).toUpperCase()}\n                </span>\n                <span className={cn(mono, \"text-foreground/40 truncate\")}>\n                  {source.domain}\n                </span>\n              </div>\n              <span className=\"text-foreground/90 line-clamp-2 text-[13px] leading-snug font-medium\">\n                {source.title}\n              </span>\n            </div>\n          ))}\n        </div>\n      </CollapsibleContent>\n    </Collapsible>\n  );\n}\n"
+    }
+  ]
+}

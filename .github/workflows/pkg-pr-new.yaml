@@ -21,7 +21,7 @@ concurrency:
 jobs:
   publish-preview:
     name: Publish Package Previews
-    if: ${{ !github.event.pull_request.draft }}
+    if: ${{ github.repository == 'assistant-ui/assistant-ui' && (!github.event.pull_request.draft) }}
     runs-on: blacksmith-8vcpu-ubuntu-2404
     timeout-minutes: 20
     steps:

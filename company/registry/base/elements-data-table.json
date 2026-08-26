@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "elements-data-table",
+  "type": "registry:component",
+  "title": "Data table",
+  "description": "A small comparison table the model can answer with directly.",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/elements-surfaces.json"
+  ],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "components/elements/data-table.tsx",
+      "content": "\"use client\";\n\nimport type { ComponentProps } from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { mono, paper } from \"./surfaces\";\n\nexport interface ModelUsage {\n  name: string;\n  context: string;\n  cost: string;\n}\n\nexport interface DataTableProps extends Omit<\n  ComponentProps<\"div\">,\n  \"children\"\n> {\n  rows: readonly ModelUsage[];\n  cycle: number;\n}\n\nexport function DataTable({\n  rows,\n  cycle,\n  className,\n  ...props\n}: DataTableProps) {\n  return (\n    <div\n      data-slot=\"data-table\"\n      className={cn(\n        paper,\n        \"w-full max-w-sm overflow-hidden rounded-2xl text-[13px]\",\n        className,\n      )}\n\n      {...props}\n    >\n      <div className=\"flex items-center px-4 pt-3 pb-2\">\n        <span className={cn(mono, \"text-foreground/35 flex-1\")}>Model</span>\n        <span className={cn(mono, \"text-foreground/35 w-16 text-end\")}>\n          Context\n        </span>\n        <span className={cn(mono, \"text-foreground/35 w-16 text-end\")}>\n          Cost\n        </span>\n      </div>\n      <div className=\"bg-foreground/[0.06] mx-4 h-px\" />\n      <div key={cycle}>\n        {rows.map((row, index) => (\n          <div\n            key={row.name}\n            className=\"fade-in slide-in-from-bottom-1 animate-in fill-mode-both hover:bg-foreground/[0.03] flex items-center gap-2.5 px-4 py-2.5 transition-colors duration-300\"\n            style={{ animationDelay: `${index * 80}ms` }}\n          >\n            <span className=\"bg-foreground/[0.06] text-foreground/45 flex size-5 shrink-0 items-center justify-center rounded-md text-[9px] font-medium\">\n              {row.name[0]!}\n            </span>\n            <span className=\"text-foreground/90 flex-1 truncate\">\n              {row.name}\n            </span>\n            <span\n              className={cn(\n                mono,\n                \"text-foreground/55 w-16 text-end tabular-nums\",\n              )}\n            >\n              {row.context}\n            </span>\n            <span\n              className={cn(\n                mono,\n                \"text-foreground/55 w-16 text-end tabular-nums\",\n              )}\n            >\n              {row.cost}\n            </span>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -27,7 +27,15 @@
     "test:types": "pnpm -r --workspace-concurrency=4 --no-bail exec sh -c '! test -f tsconfig.json || tsc --noEmit'",
     "prepare": "husky && pnpm --filter @assistant-ui/react-devtools run build:css",
     "deps:check": "npx taze major -f -r",
-    "deps:update": "npx taze major -f -w -r && cd examples/with-expo && npx expo install --fix && cd ../.. && find . -name node_modules -prune -exec rm -rf {} + && rm -f pnpm-lock.yaml && pnpm install && pnpm dedupe && bash scripts/generate-deps-changeset.sh"
+    "deps:update": "npx taze major -f -w -r && cd examples/with-expo && npx expo install --fix && cd ../.. && find . -name node_modules -prune -exec rm -rf {} + && rm -f pnpm-lock.yaml && pnpm install && pnpm dedupe && bash scripts/generate-deps-changeset.sh",
+    "company:verify": "node scripts/company/verify-company-fork.mjs && node scripts/company/gate-upstream-workflows.mjs --check assistant-ui/assistant-ui",
+    "company:build": "pnpm exec turbo build --filter=@assistant-ui/tap --filter=@assistant-ui/store --filter=assistant-stream --filter=assistant-cloud --filter=@assistant-ui/core --filter=safe-content-frame --filter=@assistant-ui/react --filter=@assistant-ui/react-native --filter=@assistant-ui/ai-sdk --filter=@assistant-ui/next --filter=@assistant-ui/react-markdown --filter=@assistant-ui/x-generative-compiler --filter=@assistant-ui/metro --filter=@assistant-ui/react-ink --filter=@assistant-ui/react-ink-markdown --filter=tw-shimmer --filter=@wenchuantech/assistant-ui-agent-launcher --filter=@wenchuantech/assistant-ui --filter=@wenchuantech/create-assistant-ui --filter=@wenchuantech/assistant-protocol --filter=@wenchuantech/assistant-runtime --filter=@wenchuantech/assistant-runtime-agui",
+    "company:stage": "node scripts/company/stage-release.mjs",
+    "company:stage:agui": "node scripts/company/stage-release.mjs --include-agui",
+    "company:registry": "pnpm --filter @assistant-ui/shadcn-registry build && node scripts/company/build-company-registry.mjs",
+    "company:release:verify": "node scripts/company/verify-staged-release.mjs",
+    "company:test": "pnpm --filter @wenchuantech/assistant-ui test && pnpm --filter @wenchuantech/assistant-protocol test && pnpm --filter @wenchuantech/assistant-runtime test && pnpm --filter @wenchuantech/assistant-runtime-agui test",
+    "company:gate-workflows": "node scripts/company/gate-upstream-workflows.mjs assistant-ui/assistant-ui"
   },
   "devDependencies": {
     "@assistant-ui/x-changelog": "workspace:*",

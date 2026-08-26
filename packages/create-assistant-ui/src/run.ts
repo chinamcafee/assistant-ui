@@ -32,7 +32,8 @@ function runSpawn(command: string, args: string[]): Promise<void> {
 }
 
 async function resolveAssistantUiBinPath(): Promise<string> {
-  const packageJsonPath = require.resolve("assistant-ui/package.json");
+  const packageJsonPath =
+    require.resolve("@wenchuantech/assistant-ui/package.json");
   const packageJsonRaw = await readFile(packageJsonPath, "utf8");
   const packageJson = JSON.parse(packageJsonRaw) as {
     bin?: string | Record<string, string>;
@@ -44,7 +45,7 @@ async function resolveAssistantUiBinPath(): Promise<string> {
       : packageJson.bin?.["assistant-ui"];
 
   if (!bin) {
-    throw new Error("assistant-ui package does not expose a binary.");
+    throw new Error("@wenchuantech/assistant-ui does not expose a binary.");
   }
 
   return path.resolve(path.dirname(packageJsonPath), bin);

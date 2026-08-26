@@ -20,6 +20,7 @@ env:
 
 jobs:
   approve:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Resolve release SHA
     runs-on: ubuntu-24.04
     concurrency:
@@ -92,6 +93,7 @@ jobs:
             core.setOutput("default_branch", defaultBranch);
 
   summary:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Resolve publish target
     needs: approve
     runs-on: ubuntu-24.04
@@ -216,7 +218,7 @@ jobs:
     needs:
       - approve
       - summary
-    if: needs.summary.outputs.should_publish == 'true'
+    if: ${{ github.repository == 'assistant-ui/assistant-ui' && (needs.summary.outputs.should_publish == 'true') }}
     environment: pypi publish
     runs-on: ubuntu-24.04
     permissions:

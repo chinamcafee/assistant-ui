@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "direction",
+  "type": "registry:ui",
+  "title": "Direction Provider",
+  "description": "Direction provider and hook for right to left layouts.",
+  "registryDependencies": [],
+  "dependencies": ["@base-ui/react"],
+  "files": [
+    {
+      "type": "registry:ui",
+      "path": "components/ui/direction.tsx",
+      "content": "\"use client\";\n\nimport type * as React from \"react\";\nimport {\n  DirectionProvider as DirectionProviderPrimitive,\n  useDirection,\n} from \"@base-ui/react/direction-provider\";\n\nfunction DirectionProvider({\n  dir,\n  direction,\n  children,\n}: React.ComponentProps<typeof DirectionProviderPrimitive> & {\n  dir?: React.ComponentProps<typeof DirectionProviderPrimitive>[\"direction\"];\n}) {\n  return (\n    <DirectionProviderPrimitive direction={direction ?? dir}>\n      {children}\n    </DirectionProviderPrimitive>\n  );\n}\n\nexport { DirectionProvider, useDirection };\n"
+    }
+  ]
+}

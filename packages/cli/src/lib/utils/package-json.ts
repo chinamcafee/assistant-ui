@@ -7,6 +7,6 @@ export function logPackageJsonParseError(
   logger.error("Could not parse package.json.");
   console.error(`Package path: ${packageJsonPath}`);
   console.error(
-    `Fix the JSON syntax in that file, then run: assistant-ui ${commandName}`,
+    `Fix the JSON syntax in that file, then run: @wenchuantech/assistant-ui ${commandName}`,
   );
 }

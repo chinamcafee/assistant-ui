@@ -47,6 +47,7 @@ concurrency:
 
 jobs:
   lint:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Oxlint + Oxfmt
     runs-on: blacksmith-8vcpu-ubuntu-2404
     timeout-minutes: 5
@@ -75,6 +76,7 @@ jobs:
         run: pnpm check:resource-memo
 
   template-sync:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Template Sync
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 5
@@ -100,6 +102,7 @@ jobs:
         run: bash scripts/sync-templates.sh
 
   build:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Build Changed Packages
     runs-on: blacksmith-8vcpu-ubuntu-2404
     timeout-minutes: 10
@@ -166,6 +169,7 @@ jobs:
         run: pnpm run api-surface:test
 
   build-apps:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Build Changed Apps
     runs-on: blacksmith-8vcpu-ubuntu-2404
     timeout-minutes: 10
@@ -210,6 +214,7 @@ jobs:
           fi
 
   api-reference-drift:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: API Reference Drift
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 10
@@ -289,6 +294,7 @@ jobs:
           fi
 
   test:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Test Changed Packages
     runs-on: blacksmith-8vcpu-ubuntu-2404
     timeout-minutes: 5

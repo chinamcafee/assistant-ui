@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "elements-reasoning-panel",
+  "type": "registry:component",
+  "title": "Reasoning panel",
+  "description": "A collapsible trace that streams reasoning steps along a timeline, then settles into a summary.",
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/elements-surfaces.json",
+    "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/elements-range.json",
+    "collapsible"
+  ],
+  "dependencies": ["lucide-react"],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "components/elements/reasoning-panel.tsx",
+      "content": "\"use client\";\n\nimport { ChevronDownIcon } from \"lucide-react\";\nimport {\n  Collapsible,\n  CollapsibleContent,\n  CollapsibleTrigger,\n} from \"@/components/ui/collapsible\";\nimport { cn } from \"@/lib/utils\";\nimport { collapsePanel, mono, ShimmerLabel, SwapLabel } from \"./surfaces\";\nimport { take } from \"./range\";\n\nexport interface ReasoningStep {\n  title: string;\n  body: string;\n}\n\nexport interface ReasoningPanelProps {\n  steps: ReasoningStep[];\n  visibleSteps: number;\n  streaming: boolean;\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  restingLabel: string;\n  elapsed?: string;\n  className?: string;\n}\n\nexport function ReasoningPanel({\n  steps,\n  visibleSteps,\n  streaming,\n  open,\n  onOpenChange,\n  restingLabel,\n  elapsed,\n  className,\n}: ReasoningPanelProps) {\n  const shown = take(steps, visibleSteps);\n\n  return (\n    <Collapsible\n      data-slot=\"reasoning-panel\"\n      open={open}\n      onOpenChange={onOpenChange}\n      className={cn(\"w-full max-w-sm\", className)}\n    >\n      <CollapsibleTrigger className=\"group/trigger text-foreground/55 hover:text-foreground/90 flex items-center gap-1.5 py-1 text-[13.5px] transition-[color,scale] outline-none active:scale-[0.98]\">\n        <SwapLabel active={streaming ? 0 : 1} className=\"text-start\">\n          <>\n            <ShimmerLabel\n              active={streaming}\n              className=\"relative inline-block leading-none\"\n            >\n              Thinking\n            </ShimmerLabel>\n            {elapsed !== undefined && (\n              <span className={cn(mono, \"text-foreground/30 tabular-nums\")}>\n                {elapsed}\n              </span>\n            )}\n          </>\n          <>{restingLabel}</>\n        </SwapLabel>\n        <ChevronDownIcon className=\"size-3.5 shrink-0 opacity-60 transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] group-data-open/trigger:rotate-180 group-data-panel-open/trigger:rotate-180 motion-reduce:transition-none\" />\n      </CollapsibleTrigger>\n      <CollapsibleContent className={cn(collapsePanel, \"outline-none\")}>\n        <ol className=\"flex flex-col gap-4 pt-3 pb-1\">\n          {shown.map((step, i) => {\n            const active = streaming && i === shown.length - 1;\n            return (\n              <li\n                key={step.title}\n                className=\"fade-in slide-in-from-bottom-1 animate-in fill-mode-both flex gap-3 duration-300\"\n              >\n                <span\n                  aria-hidden\n                  className={cn(\n                    \"mt-[7px] size-[5px] shrink-0 rounded-full transition-colors duration-300\",\n                    active\n                      ? \"animate-pulse bg-blue-500 dark:bg-blue-400\"\n                      : \"bg-foreground/20\",\n                  )}\n                />\n                <span className=\"flex min-w-0 flex-1 flex-col\">\n                  <p className=\"text-foreground/90 text-[13.5px] font-medium\">\n                    {step.title}\n                  </p>\n                  <p className=\"text-foreground/50 mt-0.5 text-[13px] leading-relaxed break-words\">\n                    {step.body}\n                  </p>\n                </span>\n              </li>\n            );\n          })}\n        </ol>\n      </CollapsibleContent>\n    </Collapsible>\n  );\n}\n"
+    }
+  ]
+}

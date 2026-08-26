@@ -127,7 +127,7 @@ describe("resolveLatestReleaseRef", () => {
 
     expect(await resolveLatestReleaseRef()).toBe("@assistant-ui/react@0.12.15");
     expect(fetchMock).toHaveBeenCalledWith(
-      "https://api.github.com/repos/assistant-ui/assistant-ui/releases/latest",
+      "https://api.github.com/repos/chinamcafee/assistant-ui/releases/latest",
       { headers: { Authorization: "Bearer ghs_test-token" } },
     );
   });
@@ -146,7 +146,7 @@ describe("downloadProject", () => {
     await downloadProject("templates/default", "/tmp/dest", "v1.0.0");
 
     expect(downloadTemplate).toHaveBeenCalledWith(
-      "gh:assistant-ui/assistant-ui/templates/default#v1.0.0",
+      "gh:chinamcafee/assistant-ui/templates/default#v1.0.0",
       expect.objectContaining({ dir: "/tmp/dest", force: true, silent: true }),
     );
   });
@@ -155,7 +155,7 @@ describe("downloadProject", () => {
     await downloadProject("examples/with-tanstack", "/tmp/dest");
 
     expect(downloadTemplate).toHaveBeenCalledWith(
-      "gh:assistant-ui/assistant-ui/examples/with-tanstack",
+      "gh:chinamcafee/assistant-ui/examples/with-tanstack",
       expect.objectContaining({ dir: "/tmp/dest", force: true, silent: true }),
     );
   });
@@ -166,7 +166,7 @@ describe("downloadProject", () => {
     await downloadProject("templates/default", "/tmp/dest", "v1.0.0");
 
     expect(downloadTemplate).toHaveBeenCalledWith(
-      "gh:assistant-ui/assistant-ui/templates/default#v1.0.0",
+      "gh:chinamcafee/assistant-ui/templates/default#v1.0.0",
       expect.objectContaining({ auth: "ghs_test-token" }),
     );
   });
@@ -180,7 +180,7 @@ describe("scaffoldProject", () => {
     });
 
     expect(downloadTemplate).toHaveBeenCalledWith(
-      "gh:assistant-ui/assistant-ui/templates/default#v1.0.0",
+      "gh:chinamcafee/assistant-ui/templates/default#v1.0.0",
       expect.objectContaining({ dir: "/tmp/dest", force: true, silent: true }),
     );
   });
@@ -253,10 +253,12 @@ describe("transformProject — hasLocalComponents: true", () => {
     });
 
     const pkg = readJSON("package.json");
-    expect(pkg.dependencies["@assistant-ui/react"]).toBe("latest");
+    expect(pkg.dependencies["@wenchuantech/assistant-ui-react"]).toBe("latest");
     expect(pkg.dependencies.next).toBe("^15.0.0");
-    expect(pkg.dependencies["@assistant-ui/ui"]).toBeUndefined();
-    expect(pkg.devDependencies["@assistant-ui/x-buildutils"]).toBeUndefined();
+    expect(pkg.dependencies["@wenchuantech/assistant-ui-ui"]).toBeUndefined();
+    expect(
+      pkg.devDependencies["@wenchuantech/assistant-ui-x-buildutils"],
+    ).toBeUndefined();
     expect(pkg.devDependencies.typescript).toBe("^5.0.0");
     expect(pkg.name).toBe(path.basename(testDir));
   });
@@ -535,9 +537,9 @@ describe("transformProject — hasLocalComponents: false", () => {
 
       const args = addCalls[0]![1] as string[];
       expect(args).toContain("button");
-      expect(args).toContain("@assistant-ui/thread");
+      expect(args).toContain("@wenchuantech-assistant-ui/thread");
       expect(args).not.toContain("button.tsx");
-      expect(args).not.toContain("@assistant-ui/thread.tsx");
+      expect(args).not.toContain("@wenchuantech-assistant-ui/thread.tsx");
     });
 
     it("skips shadcn when skipInstall is true even without local components", async () => {

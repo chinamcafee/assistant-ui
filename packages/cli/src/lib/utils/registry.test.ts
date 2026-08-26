@@ -64,19 +64,19 @@ describe("getComponentsJsonStyle", () => {
 describe("resolveQuickStartRegistryUrl", () => {
   it("uses the base quick start for base styles", () => {
     expect(resolveQuickStartRegistryUrl("base-nova")).toBe(
-      "https://r.assistant-ui.com/base/chat/b/ai-sdk-quick-start/json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/chat/b/ai-sdk-quick-start/json.json",
     );
   });
 
   it("uses the radix quick start for radix styles", () => {
     expect(resolveQuickStartRegistryUrl("radix-nova")).toBe(
-      "https://r.assistant-ui.com/chat/b/ai-sdk-quick-start/json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/chat/b/ai-sdk-quick-start/json.json",
     );
   });
 
   it("uses the base quick start without a style", () => {
     expect(resolveQuickStartRegistryUrl()).toBe(
-      "https://r.assistant-ui.com/base/chat/b/ai-sdk-quick-start/json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/chat/b/ai-sdk-quick-start/json.json",
     );
   });
 });
@@ -84,31 +84,31 @@ describe("resolveQuickStartRegistryUrl", () => {
 describe("resolveRegistryItemUrl", () => {
   it("uses the style scoped URL for base styles", () => {
     expect(resolveRegistryItemUrl("thread", "base-nova")).toBe(
-      "https://r.assistant-ui.com/styles/base-nova/thread.json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
     );
   });
 
   it("uses the plain URL for non-base styles", () => {
     expect(resolveRegistryItemUrl("thread", "nova")).toBe(
-      "https://r.assistant-ui.com/thread.json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/thread.json",
     );
   });
 
   it("uses the base URL without a style", () => {
     expect(resolveRegistryItemUrl("thread")).toBe(
-      "https://r.assistant-ui.com/base/thread.json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
     );
   });
 
   it("uses the base URL for an explicit undefined style", () => {
     expect(resolveRegistryItemUrl("thread", undefined)).toBe(
-      "https://r.assistant-ui.com/base/thread.json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
     );
   });
 
   it("keeps the style inside a single path segment", () => {
     expect(resolveRegistryItemUrl("thread", "base-nova?preview=1")).toBe(
-      "https://r.assistant-ui.com/styles/base-nova%3Fpreview%3D1/thread.json",
+      "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry/base/thread.json",
     );
   });
 });

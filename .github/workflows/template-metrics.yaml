@@ -25,6 +25,7 @@ env:
 
 jobs:
   gate:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: Footprint Gate
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 5
@@ -45,6 +46,7 @@ jobs:
         run: node scripts/template-metrics.mjs check .
 
   report:
+    if: github.repository == 'assistant-ui/assistant-ui'
     name: LOC + Bundle Size
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 20

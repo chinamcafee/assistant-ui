@@ -1,7 +1,9 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-const REGISTRY_BASE_URL = "https://r.assistant-ui.com";
+export const REGISTRY_BASE_URL =
+  process.env.WENCHUAN_ASSISTANT_UI_REGISTRY_URL ??
+  "https://raw.githubusercontent.com/chinamcafee/assistant-ui/main/company/registry";
 
 export function getComponentsJsonStyle(cwd: string): string | undefined {
   try {
@@ -21,10 +23,10 @@ export function resolveQuickStartRegistryUrl(style?: string): string {
   // /chat/b/ unless they already end with it, so this item must use the direct
   // tree URLs rather than the /styles/ template.
   if (style === undefined || style.startsWith("base-")) {
-    return `${REGISTRY_BASE_URL}/base/chat/b/ai-sdk-quick-start/json`;
+    return `${REGISTRY_BASE_URL}/base/chat/b/ai-sdk-quick-start/json.json`;
   }
 
-  return `${REGISTRY_BASE_URL}/chat/b/ai-sdk-quick-start/json`;
+  return `${REGISTRY_BASE_URL}/chat/b/ai-sdk-quick-start/json.json`;
 }
 
 export function resolveRegistryItemUrl(
@@ -36,7 +38,7 @@ export function resolveRegistryItemUrl(
   }
 
   const registryUrl = style.startsWith("base-")
-    ? `${REGISTRY_BASE_URL}/styles/${encodeURIComponent(style)}`
+    ? `${REGISTRY_BASE_URL}/base`
     : REGISTRY_BASE_URL;
 
   return `${registryUrl}/${encodeURIComponent(component)}.json`;

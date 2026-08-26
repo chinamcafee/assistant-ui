@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Wenchuan assistant-ui package map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope",
+    "version",
+    "repository",
+    "scopedRule",
+    "unscoped",
+    "companyOwned"
+  ],
+  "properties": {
+    "scope": {
+      "const": "@wenchuantech"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+].+)?$"
+    },
+    "repository": {
+      "type": "string",
+      "format": "uri"
+    },
+    "scopedRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" }
+      }
+    },
+    "unscoped": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^@wenchuantech/"
+      }
+    },
+    "companyOwned": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^@wenchuantech/"
+      }
+    }
+  }
+}
